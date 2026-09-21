@@ -1,0 +1,217 @@
+@import url(https://fonts.googleapis.com/css?family=Bebas-Neue);
+
+/* =============================================
+   BACKGROUND TINT — change this one variable
+   to recolour the entire paisley background!
+   ============================================= */
+:root {
+    --bg-tint: #011710f1;
+    /* Deep emerald green overlay */
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: #03271c;
+    /* Fallback colour if image fails to load */
+    font-family: 'Bebas-Neue', sans-serif;
+    color: #fff9ec;
+    font-weight: bold;
+    position: relative;
+    /* Required so ::before/::after stack below children */
+    isolation: isolate;
+}
+
+/* Layer 1 — Paisley texture image, pinned to viewport */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image: url('perhaps.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+}
+
+/* Layer 2 — Colour tint overlay, uses mix-blend-mode so the
+   texture detail shows through while the hue is controlled
+   entirely by the --bg-tint variable above */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--bg-tint);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+.main-container {
+    border: #fff7e8 2px solid;
+    display: flex;
+    flex-direction: column;
+    /* Stack header above buttons */
+    align-items: flex-start;
+    padding: 2em 2.5em;
+    min-height: 95vh;
+    /* Grows with content instead of being locked */
+    width: 90vw;
+    margin: 2.5vh auto;
+    font-size: 2.5rem;
+    text-decoration: none;
+    position: relative;
+    box-shadow: 0 0 10px rgba(253, 251, 247, 0.2), inset 0 0 10px rgba(253, 251, 247, 0.2);
+    overflow: visible;
+    /* Let content breathe */
+}
+
+.header-container {
+    padding: 0.5em 1.5em 1em 0;
+    position: relative;
+    max-width: 45%;
+    width: auto;
+    margin-bottom: 0.5em;
+    align-self: flex-start;
+    /* Stops flexbox from stretching it to full page height */
+    /* No border-right here — it's drawn by ::before so we can control its height */
+}
+
+/* ── Shortened, centred right border ────────────────────────
+   To adjust height: change the height value below (e.g. 50%, 70%, 4em).
+   It stays vertically centred automatically via top/transform. */
+.header-container::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    /* Sits flush on the right edge of the container */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70%;
+    /* ← change this to make the border taller or shorter */
+    width: 2px;
+    background-color: #fff7e8;
+    border-radius: 1px;
+}
+
+.small-text {
+    font-size: 1.3rem;
+    font-weight: normal;
+    line-height: 1.6;
+    margin: 0.4em 0;
+    color: rgba(255, 249, 236, 0.85);
+}
+
+/* Light streak radiates rightward from the vertical border */
+.header-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    width: 78vw;
+    height: 55vh;
+    pointer-events: none;
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+    background: radial-gradient(ellipse at 0% 50%, rgba(255, 247, 232, 0.9) 0%, rgba(255, 247, 232, 0.4) 10%, rgba(255, 247, 232, 0.1) 40%, rgba(255, 247, 232, 0) 75%);
+}
+
+.section-divider {
+    display: none;
+    /* Divider handled by header-container border-bottom */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    /* Stack title then buttons vertically */
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 1.5em 0;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-title {
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    color: rgb(255, 253, 245);
+    font-weight: bold;
+    margin-bottom: 1em;
+    text-transform: uppercase;
+}
+
+.contact-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2em;
+}
+
+.button {
+    background-color: #fdfbf7;
+    color: #044532;
+    font-size: 1.5rem;
+    /* Bumped up from 1.2rem */
+    font-family: 'Bebas-Neue', sans-serif;
+    font-weight: bold;
+    /* Ensures <button> elements inherit bold just like <a> */
+    letter-spacing: 0.05em;
+    text-decoration-line: underline;
+    text-decoration-color: #044532;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    display: inline-flex;
+    cursor: pointer;
+    border: #fdfbf7 2px solid;
+    border-radius: 5px;
+    padding: 0.55em 1.2em;
+    height: auto;
+    text-shadow: 0 0 0.7em rgba(253, 251, 247, 0.8);
+    box-shadow: 0 0 1em rgba(253, 251, 247, 0.5), inset 0 0 0.4em rgba(253, 251, 247, 0.5);
+    justify-content: center;
+    align-items: center;
+
+    /* Smooth hover transitions — transform is handled by JS */
+    scale: 1;
+    transition: scale 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        color 0.3s,
+        background-color 0.3s,
+        box-shadow 0.3s;
+}
+
+.button:hover {
+    color: #065f46;
+    background-color: #fdfbf7;
+    box-shadow: 0 0 1.5em rgba(253, 251, 247, 0.8), inset 0 0 1em rgba(253, 251, 247, 0.8);
+    scale: 1.2;
+}
+
+/* ── Toast notification ──────────────────────────────────── */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(1rem);
+    background: rgba(3, 39, 28, 0.92);
+    color: #fff9ec;
+    border: 1px solid rgba(255, 249, 236, 0.3);
+    backdrop-filter: blur(8px);
+    font-family: 'Bebas-Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    padding: 0.6em 1.4em;
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
