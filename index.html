@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aakarshak</title>
+    <link rel="stylesheet" href="body.css">
+    <style>
+        p.small-text {
+            font-size: 1.3rem;
+            /* Smaller text */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Toast notification for clipboard copies -->
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <div class="main-container">
+
+        <!-- Header / Bio section -->
+        <div class="header-container">
+            <h1>Hi there!</h1>
+            <p class="small-text">I am Aakarshak, an aspiring polymath with a knack for learning.</p>
+            <p class="small-text">This is especially shown in my wide array of interests, but professionally I would
+                like to delve into the applications of AI in the financial and medical fields, and research on
+                sustainable AI development.</p>
+            <p class="small-text">Kindly forgive this barebones website, it's still a W.I.P.</p>
+        </div>
+
+        <!-- Divider -->
+        <hr class="section-divider">
+
+        <!-- Creative Projects -->
+        <div class="projects-container">
+            <h2 class="projects-title">Creative Projects</h2>
+            <div class="projects-grid">
+                <!-- Column 1 -->
+                <div class="project-column">
+                    <h3 class="column-header">Presentation</h3>
+                    <a href="https://canva.link/ma6jke6ve8nb9vs" class="button-small">View</a>
+                </div>
+                <!-- Column 2 -->
+                <div class="project-column">
+                    <h3 class="column-header">Project Thehar</h3>
+                    <a href="https://canva.link/v8b2l0dnbv4ypnb" class="button-small">Post</a>
+                </div>
+                <!-- Column 3 -->
+                <div class="project-column">
+                    <h3 class="column-header">Song sync (WIP)</h3>
+                    <a href="https://canva.link/hmhtjudlat3cj3r" class="button-small">View</a>
+                </div>
+                <!-- Column 4 -->
+                <div class="project-column">
+                    <h3 class="column-header">School Magazine</h3>
+                    <a href="https://canva.link/a9l1pvpf50xpx6y" class="button-small">Read</a>
+                </div>
+                <!-- Column 5 (Top Gun Ryanite) -->
+                <div class="project-column">
+                    <h3 class="column-header">TopGun Ryanite</h3>
+                    <a href="https://canva.link/xp7kguxbye0mtkj" class="button-small">Poster</a>
+                    <a href="https://canva.link/7u2n88jyc1fkx9c" class="button-small">Brocure</a>
+                    <a href="https://canva.link/mgy0gw5al69chrv" class="button-small">Standee</a>
+                    <a href="https://canva.link/1i2hit2pz0s53n4" class="button-small">Banner</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact buttons — stacked below the header -->
+        <div class="button-container" id="contact">
+            <h2 class="contact-title">Contact me</h2>
+
+            <div class="contact-buttons">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/aakarshak.asiwal" target="_blank" rel="noopener noreferrer"
+                    class="button" id="button-instagram">instagram</a>
+
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/aakarshak-asiwal" target="_blank" rel="noopener noreferrer"
+                    class="button" id="button-linkedin">linkedin</a>
+
+                <!-- E-mail: opens Gmail compose with your address pre-filled, AND copies address to clipboard -->
+                <a href="mailto:aakarshakasiwal@gmail.com" data-email="aakarshakasiwal@gmail.com"
+                    data-gmail="https://mail.google.com/mail/?view=cm&to=aakarshakasiwal@gmail.com" class="button"
+                    id="button-email">e-mail</a>
+
+                <!-- Phone: copies number to clipboard on click -->
+                <button data-phone="+351 928308364" class="button" id="button-phone">phone</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        /* ── Toast helper ───────────────────────────────────────── */
+        const toast = document.getElementById('toast');
+        let toastTimeout;
+
+        function showToast(msg) {
+            clearTimeout(toastTimeout);
+            toast.textContent = msg;
+            toast.classList.add('show');
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        /* ── Clipboard helper ───────────────────────────────────── */
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        /* ── E-mail button ──────────────────────────────────────── */
+        document.getElementById('button-email').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const btn = e.currentTarget;
+            const email = btn.dataset.email;
+            const gmail = btn.dataset.gmail;
+
+            // Copy email address to clipboard
+            const copied = await copyToClipboard(email);
+
+            // Open Gmail compose tab
+            window.open(gmail, '_blank', 'noopener,noreferrer');
+
+            showToast(copied ? `E-mail address has been copied to clipboard.` : `Gmail opened!`);
+        });
+
+        /* ── Phone button ───────────────────────────────────────── */
+        document.getElementById('button-phone').addEventListener('click', async (e) => {
+            const phone = e.currentTarget.dataset.phone;
+            const copied = await copyToClipboard(phone);
+            showToast(copied ? `Phone number copied to clipboard` : `Couldn't copy, kindly retry or try other contact avenues.`);
+        });
+
+        /* ── Smooth hover float animation (all .button elements) ── */
+        document.querySelectorAll('.button, .button-small').forEach(button => {
+            let isHovered = false;
+            let currentY = 0;
+            let frame;
+
+            const animate = (time) => {
+                if (isHovered) {
+                    const targetY = -4 + Math.sin(time / 200) * 3;
+                    currentY += (targetY - currentY) * 0.1;
+                    button.style.transform = `translateY(${currentY}px)`;
+                    frame = requestAnimationFrame(animate);
+                } else {
+                    currentY += (0 - currentY) * 0.15;
+                    button.style.transform = `translateY(${currentY}px)`;
+                    if (Math.abs(currentY) > 0.1) {
+                        frame = requestAnimationFrame(animate);
+                    } else {
+                        button.style.transform = `translateY(0px)`;
+                    }
+                }
+            };
+
+            button.addEventListener('mouseenter', () => {
+                isHovered = true;
+                cancelAnimationFrame(frame);
+                frame = requestAnimationFrame(animate);
+            });
+
+            button.addEventListener('mouseleave', () => { isHovered = false; });
+        });
+    </script>
+</body>
+
+</html>
