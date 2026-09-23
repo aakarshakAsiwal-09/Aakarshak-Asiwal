@@ -189,6 +189,86 @@ body::after {
     scale: 1.2;
 }
 
+/* ── Projects Section ────────────────────────────────────── */
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 0;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.projects-title {
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    color: rgb(255, 253, 245);
+    font-weight: bold;
+    margin-bottom: 1em;
+    text-transform: uppercase;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5em;
+    width: 100%;
+}
+
+.project-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    align-items: flex-start;
+}
+
+.column-header {
+    font-size: 1.2rem;
+    color: rgba(255, 249, 236, 0.85);
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+    min-height: 1.5em;
+}
+
+/* Small button based on .button */
+.button-small {
+    background-color: #fdfbf7;
+    color: #044532;
+    font-size: 1.2rem;
+    font-family: 'Bebas-Neue', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-decoration-line: underline;
+    text-decoration-color: #044532;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    display: inline-flex;
+    cursor: pointer;
+    border: #fdfbf7 2px solid;
+    border-radius: 4px;
+    padding: 0.4em 0.8em;
+    height: auto;
+    text-shadow: 0 0 0.5em rgba(253, 251, 247, 0.8);
+    box-shadow: 0 0 0.8em rgba(253, 251, 247, 0.5), inset 0 0 0.3em rgba(253, 251, 247, 0.5);
+    justify-content: center;
+    align-items: center;
+    min-width: 3em;
+    min-height: 1.5em;
+    
+    scale: 1;
+    transition: scale 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        color 0.3s,
+        background-color 0.3s,
+        box-shadow 0.3s;
+}
+
+.button-small:hover {
+    color: #065f46;
+    background-color: #fdfbf7;
+    box-shadow: 0 0 1.2em rgba(253, 251, 247, 0.8), inset 0 0 0.8em rgba(253, 251, 247, 0.8);
+    scale: 1.15;
+}
+
 /* ── Toast notification ──────────────────────────────────── */
 .toast {
     position: fixed;
